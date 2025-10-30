@@ -50,6 +50,10 @@ init_transaction_account_routes(app)
 def health():
     return {"status": "ok"}, 200
 
+@app.route("/")
+def home():
+    return {"message": "Flask app is running 🚀"}, 200
+
 # Закриття з’єднання після ініціалізації
 cursor.close()
 db_connection.close()
