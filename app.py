@@ -22,13 +22,11 @@ CORS(app)
 app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET')
 jwt = JWTManager(app)
 
-# Завантаження конфігурації бази даних
 db_config = config.load_db_config()
 db_connection = mysql.connector.connect(**db_config)
 cursor = db_connection.cursor()
 
 drop_triggers(cursor)
-# # Налаштування бази даних
 # setup_tables(cursor)
 # setup_triggers(cursor)
 # setup_procedures(cursor)
@@ -54,7 +52,6 @@ def health():
 def home():
     return {"message": "Flask app is running 🚀"}, 200
 
-# Закриття з’єднання після ініціалізації
 cursor.close()
 db_connection.close()
 

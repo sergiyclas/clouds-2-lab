@@ -32,6 +32,11 @@ PUT is the same, but you need choose user address, which data to change:
 http://127.0.0.1:5000/users/{id_user_to_change}
 ``` -->
 
+To open SWAGGER:
+```
+http://localhost:5000/apidocs
+```
+
 
 # Clouds
 
