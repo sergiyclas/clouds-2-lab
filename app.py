@@ -9,12 +9,12 @@ from config import config
 from flask_cors import CORS
 import mysql.connector
 from flasgger import Swagger
-from db import main
+# from db import main
 import os
 
 
 app = Flask(__name__)
-main()
+# main()
 
 Swagger(app)
 CORS(app)
