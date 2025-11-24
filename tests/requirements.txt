@@ -1,0 +1,13 @@
+requests
+blinker==1.8.2
+click==8.1.7
+colorama==0.4.6
+Flask==3.0.3
+Flask-Cors==5.0.0
+itsdangerous==2.2.0
+PyYAML==6.0.2
+Werkzeug==3.0.4
+flasgger==0.9.7.1
+gunicorn==23.0.0
+flask-jwt-extended~=4.7.1
+python-dotenv~=1.2.1

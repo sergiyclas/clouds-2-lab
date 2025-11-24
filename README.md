@@ -37,6 +37,26 @@ To open SWAGGER:
 http://localhost:5000/apidocs
 ```
 
+# Docker
+
+## Hot to build:
+```shell
+docker-compose up --build
+```
+
+## How to clean:
+```shell
+docker compose down -v
+```
+
+```shell
+docker stop myapp_container
+docker rm myapp_container
+docker build -t myapp .
+docker run -d -p 5000:5000 --name myapp_container myapp
+docker logs -f myapp_container
+
+```
 
 # Clouds
 

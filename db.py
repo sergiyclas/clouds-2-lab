@@ -13,7 +13,7 @@ def create_database_if_not_exists(config):
     connection = config_module.wait_for_db(config_without_db)
 
     cursor = connection.cursor()
-    cursor.execute("CREATE DATABASE IF NOT EXISTS online_banking")
+    cursor.execute("CREATE DATABASE IF NOT EXISTS `online-banking-db`")
     print("База даних створена або вже існує.")
     cursor.close()
     connection.close()
@@ -42,7 +42,7 @@ def main():
     create_database_if_not_exists(config)
 
     db_config_with_name = config.copy()
-    db_config_with_name['database'] = 'online_banking'
+    db_config_with_name['database'] = 'online-banking-db'
 
     connection = config_module.wait_for_db(db_config_with_name)
 

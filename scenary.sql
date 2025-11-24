@@ -1,28 +1,29 @@
-DROP DATABASE IF EXISTS online_banking;
-CREATE DATABASE IF NOT EXISTS online_banking;
-USE online_banking;
+-- Створення бази даних
+DROP DATABASE IF EXISTS `online-banking-db`;
+CREATE DATABASE IF NOT EXISTS `online-banking-db`;
+USE `online-banking-db`;
 
--- Скидання таблиць
-DROP TABLE IF EXISTS transactionsaccounts;
-DROP TABLE IF EXISTS status_transactions;
-DROP TABLE IF EXISTS payment_templates;
+-- Скидання таблиць у правильному порядку (з урахуванням FK)
+DROP TABLE IF EXISTS TransactionsAccounts;
 DROP TABLE IF EXISTS needs;
 DROP TABLE IF EXISTS fees;
+DROP TABLE IF EXISTS status_transactions;
 DROP TABLE IF EXISTS cards;
 DROP TABLE IF EXISTS authorizations;
+DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS customers;
-DROP TABLE IF EXISTS transactions;
+DROP TABLE IF EXISTS logs;
 
 -- Створення таблиць
-CREATE TABLE customers (
+CREATE TABLE IF NOT EXISTS customers (
     customer_id INT PRIMARY KEY AUTO_INCREMENT,
     customer_name VARCHAR(50) NOT NULL,
     email VARCHAR(50),
     phone VARCHAR(15)
 );
 
-CREATE TABLE accounts (
+CREATE TABLE IF NOT EXISTS accounts (
     account_id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT,
     account_number VARCHAR(20) NOT NULL,
@@ -30,13 +31,13 @@ CREATE TABLE accounts (
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
 );
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
     transaction_id INT PRIMARY KEY AUTO_INCREMENT,
     amount DECIMAL(15, 2) NOT NULL,
     transaction_date DATE NOT NULL
 );
 
-CREATE TABLE TransactionsAccounts (
+CREATE TABLE IF NOT EXISTS TransactionsAccounts (
     id INT PRIMARY KEY AUTO_INCREMENT,
     account_id INT,
     transaction_id INT,
@@ -44,7 +45,7 @@ CREATE TABLE TransactionsAccounts (
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id) ON DELETE CASCADE
 );
 
-CREATE TABLE payment_templates (
+CREATE TABLE IF NOT EXISTS payment_templates (
     template_id INT PRIMARY KEY AUTO_INCREMENT,
     account_id INT,
     template_name VARCHAR(50) NOT NULL,
@@ -52,7 +53,7 @@ CREATE TABLE payment_templates (
     FOREIGN KEY (account_id) REFERENCES accounts(account_id) ON DELETE CASCADE
 );
 
-CREATE TABLE cards (
+CREATE TABLE IF NOT EXISTS cards (
     card_id INT PRIMARY KEY AUTO_INCREMENT,
     account_id INT,
     card_number VARCHAR(20) NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE cards (
     FOREIGN KEY (account_id) REFERENCES accounts(account_id) ON DELETE CASCADE
 );
 
-CREATE TABLE needs (
+CREATE TABLE IF NOT EXISTS needs (
     need_id INT PRIMARY KEY AUTO_INCREMENT,
     transaction_id INT UNIQUE,
     service_name VARCHAR(100),
@@ -72,7 +73,7 @@ CREATE TABLE needs (
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id) ON DELETE CASCADE
 );
 
-CREATE TABLE authorizations (
+CREATE TABLE IF NOT EXISTS authorizations (
     auth_id INT PRIMARY KEY AUTO_INCREMENT,
     account_id INT,
     login_time TIMESTAMP,
@@ -81,25 +82,24 @@ CREATE TABLE authorizations (
     FOREIGN KEY (account_id) REFERENCES accounts(account_id) ON DELETE CASCADE
 );
 
-CREATE TABLE fees (
+CREATE TABLE IF NOT EXISTS fees (
     fee_id INT PRIMARY KEY AUTO_INCREMENT,
-    transaction_id INT UNIQUE, -- обмеження для зв'язку один до одного
+    transaction_id INT UNIQUE,
     fee_amount DECIMAL(15, 2),
     fee_date DATE,
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id) ON DELETE CASCADE
 );
 
-CREATE TABLE status_transactions (
+CREATE TABLE IF NOT EXISTS status_transactions (
     status_id INT PRIMARY KEY AUTO_INCREMENT,
-    transaction_id INT UNIQUE, -- обмеження для зв'язку один до одного
+    transaction_id INT UNIQUE,
     status VARCHAR(50),
     status_date DATE,
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id) ON DELETE CASCADE
 );
 
-
--- тригер
-CREATE TABLE logs (
+-- Тригер / логи
+CREATE TABLE IF NOT EXISTS logs (
     log_id INT AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT NOT NULL,
     log_action VARCHAR(100),

@@ -1,0 +1,8 @@
+aws_region    = "eu-north-1"
+project_name  = "loadgen-clouds-lab-2"
+container_image = "204898220030.dkr.ecr.eu-north-1.amazonaws.com/loadgen-lab-2:latest"
+
+# Optional overrides
+# vpc_cidr            = "10.10.0.0/16"
+# public_subnet_cidrs = ["10.10.1.0/24", "10.10.2.0/24"]
+# desired_count       = 2
